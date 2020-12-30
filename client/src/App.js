@@ -1,20 +1,18 @@
-import { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Home from './components/Home';
-import Admin from './components/Admin';
 import Login from './components/Login';
-import Profile from './components/user-dashboard';
-import { UserProvider } from './context/UserContext';
-
+import UserDashboard from './components/UserDashboard';
+import AdminDashboard from './components/AdminDashboard';
 function App() {
+  //UserData
+  // eslint-disable-next-line
+  const [userData, setUserData] = React.useState();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [view, setView] = useState('home');
-
-  
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [view, setView] = React.useState('home');
 
   return (
-    <UserProvider>
     <div className="App">
         <div className="navbar">
             <div className="logo">
@@ -24,13 +22,13 @@ function App() {
                 <div className="link">
                   <p onClick={() => setView('home')}>Home</p>
                 </div>
-                <div className="link">
-                  <p onClick={() => setView('admin')}>Admin</p>
-                </div>
             </div>
             {isLoggedIn ?
               <div className="profile">
-                <p onClick={() => setView('profile')}>Profile</p>
+                {userData.role === 'admin' ?
+                <p onClick={() => setView('admin-dashboard')}>Profile</p> :
+                <p onClick={() => setView('user-dashboard')}>Profile</p>
+                }
                 <p onClick={() => setIsLoggedIn(false)}>Logout</p>
               </div>
               :
@@ -38,22 +36,20 @@ function App() {
                 <p onClick={() => setView('login')}>Login</p>
               </div>
             }
-            
         </div>
         {view === 'home' &&
-          <Home />
-        }
-        {view === 'admin' &&
-          <Admin />
+          <Home userData={userData} setUserData={setUserData} />
         }
         {view === 'login' &&
-          <Login setIsLoggedIn={setIsLoggedIn} setView={setView}/>
+          <Login setUserData={setUserData} setIsLoggedIn={setIsLoggedIn} setView={setView}/>
         }
-        {view === 'profile' &&
-          <Profile />
+        {view === 'admin-dashboard' &&
+          <AdminDashboard />
+        }
+        {view === 'user-dashboard' &&
+          <UserDashboard />
         }
     </div>
-    </UserProvider>
   );
 }
 

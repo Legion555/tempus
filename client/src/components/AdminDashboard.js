@@ -4,7 +4,7 @@ import {useState} from 'react';
 const Joi = require('@hapi/joi');
 
 
-const Admin = (props) => {
+const AdminDashboard = (props) => {
     //add-item
     const [addName, setAddName] = useState('');
     const [addDetails, setAddDetails] = useState('');
@@ -37,11 +37,9 @@ const Admin = (props) => {
             console.log(error);
         });
     }
-    
-
-  
+     
     return (
-        <div className="dashboard">
+        <div className="profile">
             <h1>Admin</h1>
             
             <div className="add-watch__container">
@@ -71,9 +69,8 @@ const Admin = (props) => {
                 <button onClick={addWatch}>Add watch</button>
 
             </div>
-
         </div>
     )
 }
 
-export default Admin
+export default AdminDashboard

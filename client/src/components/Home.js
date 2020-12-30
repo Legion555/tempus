@@ -23,6 +23,20 @@ const Home = (props) => {
         })
     }
 
+    const addToWatchlist = (itemId, itemName) => {
+        const payload = {
+            userId: props.userData._id,
+            watchId: itemId,
+            watchName: itemName
+        }
+        axios.put("/api/users/addToWatchlist", payload)
+        .then(res => {
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
   
     return (
         <div className="home">
@@ -88,6 +102,7 @@ const Home = (props) => {
                             <p className="name">{item.name}</p>
                             <p>{item.details.length < 40 ? item.details : `${item.details.slice(0,40)}...`}</p>
                             <p className="price">${item.price}</p>
+                            <button onClick={() => addToWatchlist(item._id, item.name)}>Add to watchlist</button>
                         </div>
                     )}
                 </div>

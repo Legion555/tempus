@@ -50,7 +50,6 @@ router.post('/register', async (req,res) => {
 
     //Create new user
     const newUser = new User({
-        role: 'user',
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword
@@ -82,5 +81,21 @@ router.post('/login', async (req,res) => {
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send(token);
 })
+
+//add to watchlist
+router.put('/addToWatchlist', async (req,res) => {
+    User.update(
+      { "_id": req.body.userId },
+      { $push: { watchList:
+        { name: req.body.watchName, id: req.body.watchId } } },
+      function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  })
 
 module.exports = router;

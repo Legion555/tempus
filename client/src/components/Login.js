@@ -1,18 +1,16 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { UserContext } from '../context/UserContext';
 
 const Login = (props) => {
     //UserData
     // eslint-disable-next-line
-    const [userData, setUserData] = useContext(UserContext);
     const [errorHandle, setErrorHandle] = useState([]);
     //View
     // eslint-disable-next-line
     const [view, setView] = useState('login');
     //Login
-    const [loginEmail, setLoginEmail] = useState('');
-    const [loginPassword, setLoginPassword] = useState('');
+    const [loginEmail, setLoginEmail] = useState('legion@gmail.com');
+    const [loginPassword, setLoginPassword] = useState('legion123');
     //Register
     const [regName, setRegName] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -28,10 +26,26 @@ const Login = (props) => {
         axios.post('/api/users/login', details)
         .then(res => {
             if (res.data.length > 15) {
-                const userToken = res.headers["auth-token"];
-                sessionStorage.setItem('userToken', userToken);
-                props.setIsLoggedIn(true);
-                props.setView('home');
+                //Get User Data
+                axios.get('/api/users', {
+                    params: {
+                        email: loginEmail
+                    }
+                })
+                .then(res => {
+                    //set user data
+                    const newUserData = res.data;
+                    props.setUserData(newUserData);
+                    //set headers
+                    const userToken = res.headers["auth-token"];
+                    sessionStorage.setItem('userToken', userToken);
+                    //redirect to home
+                    props.setIsLoggedIn(true);
+                    props.setView('home');
+                })
+                .catch(err => {
+                    console.log("Error: " + err);
+                })
             } else {
                 let match = res.data.match(/"([^"]*)"/);
                 let error = [];
@@ -50,19 +64,6 @@ const Login = (props) => {
                         console.log('something went wrong...');
                 }
             }
-            //Get User Data
-            axios.get('/api/users', {
-                params: {
-                    email: loginEmail
-                }
-            })
-            .then(res => {
-                const newUserData = res.data;
-                setUserData(newUserData);
-            })
-            .catch(err => {
-                console.log("Error: " + err);
-            })
         })
     }
 
