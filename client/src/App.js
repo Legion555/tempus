@@ -2,42 +2,58 @@ import { useState } from 'react';
 import './App.css';
 import Home from './components/Home';
 import Admin from './components/Admin';
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
+import Login from './components/Login';
+import Profile from './components/user-dashboard';
+import { UserProvider } from './context/UserContext';
 
 function App() {
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [view, setView] = useState('home');
+
+  
+
   return (
+    <UserProvider>
     <div className="App">
-      <BrowserRouter>
         <div className="navbar">
             <div className="logo">
 
             </div>
             <div className="links__container">
                 <div className="link">
-                  <Link to="/home">Home</Link>
+                  <p onClick={() => setView('home')}>Home</p>
                 </div>
                 <div className="link">
-                  <Link to="/admin">Admin</Link>
+                  <p onClick={() => setView('admin')}>Admin</p>
                 </div>
             </div>
-            <div className="search">
-
-            </div>
+            {isLoggedIn ?
+              <div className="profile">
+                <p onClick={() => setView('profile')}>Profile</p>
+                <p onClick={() => setIsLoggedIn(false)}>Logout</p>
+              </div>
+              :
+              <div className="profile">
+                <p onClick={() => setView('login')}>Login</p>
+              </div>
+            }
+            
         </div>
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/admin">
-            <Admin />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+        {view === 'home' &&
+          <Home />
+        }
+        {view === 'admin' &&
+          <Admin />
+        }
+        {view === 'login' &&
+          <Login setIsLoggedIn={setIsLoggedIn} setView={setView}/>
+        }
+        {view === 'profile' &&
+          <Profile />
+        }
     </div>
+    </UserProvider>
   );
 }
 

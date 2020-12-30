@@ -42,7 +42,7 @@ a {
 }
 
 .navbar {
-  width: 100vw;
+  width: 100%;
   height: 50px;
   background: #282828;
   display: -webkit-box;
@@ -67,6 +67,14 @@ a {
 }
 
 .navbar .links__container .link p {
+  color: #f8f8f8;
+}
+
+.navbar .profile {
+  padding: 10px;
+}
+
+.navbar .profile p {
   color: #f8f8f8;
 }
 
@@ -173,7 +181,7 @@ a {
 }
 
 .footer {
-  width: 100vw;
+  width: 100%;
   height: 100px;
   background: #dac519;
   text-align: center;
@@ -203,5 +211,54 @@ a {
   background: #282828;
   color: #f8f8f8;
   font-size: 18px;
+}
+
+.auth {
+  width: 100%;
+}
+
+.auth .auth__container {
+  width: 500px;
+  margin: 100px auto 0 auto;
+  padding: 25px;
+  background: #f8f8f8;
+  -webkit-box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.auth .auth__container h1 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.auth .auth__container h1 span {
+  color: #a8a8a8;
+}
+
+.auth .auth__container h1 .active {
+  color: #282828;
+}
+
+.auth .auth__container .login__container input, .auth .auth__container .register__container input {
+  width: 100%;
+  display: block;
+  margin: 0 0 20px 0;
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 24px;
+  text-align: center;
+  background: #e6e6e6;
+}
+
+.auth .auth__container .login__container .submit, .auth .auth__container .register__container .submit {
+  display: block;
+  width: 100px;
+  margin: 0 auto 20px auto;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background: #56BAEC;
+  color: #f8f8f8;
 }
 /*# sourceMappingURL=App.css.map */

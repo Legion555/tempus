@@ -16,6 +16,7 @@ mongoose.connect(process.env.MONGODB_URI,
 
 //import route
 const productsRoute = require('./routes/products');
+const usersRoute = require('./routes/users');
 
 //Middleware
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use(cors());
 
 //Route middleware
 app.use('/api/products', productsRoute);
+app.use('/api/users', usersRoute);
 
 
 if(process.env.NODE_ENV === 'production') {
