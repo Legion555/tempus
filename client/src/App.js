@@ -1,9 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import './App.css';
+//Components
 import Home from './components/Home';
 import Login from './components/Login';
 import UserDashboard from './components/UserDashboard';
 import AdminDashboard from './components/AdminDashboard';
+//Icons
+import { CgLogOut, CgProfile } from 'react-icons/cg';
+
 function App() {
   //UserData
   // eslint-disable-next-line
@@ -11,6 +16,25 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [view, setView] = React.useState('home');
+
+  const updateUserData = () => {
+    axios.get('/api/users', {
+        params: {
+            email: userData.email
+        }
+    })
+    .then(res => {
+        //set user data
+        const newUserData = res.data;
+        setUserData(newUserData);
+        //set headers
+        const userToken = res.headers["auth-token"];
+        sessionStorage.setItem('userToken', userToken);
+    })
+    .catch(err => {
+        console.log("Error: " + err);
+    })
+}
 
   return (
     <div className="App">
@@ -26,10 +50,10 @@ function App() {
             {isLoggedIn ?
               <div className="profile">
                 {userData.role === 'admin' ?
-                <p onClick={() => setView('admin-dashboard')}>Profile</p> :
-                <p onClick={() => setView('user-dashboard')}>Profile</p>
+                <CgProfile className="profile__icon" onClick={() => setView('admin-dashboard')} /> :
+                <CgProfile className="profile__icon" onClick={() => setView('user-dashboard')} />
                 }
-                <p onClick={() => setIsLoggedIn(false)}>Logout</p>
+                <CgLogOut className="logout__icon" onClick={() => setIsLoggedIn(false)} />
               </div>
               :
               <div className="profile">
@@ -44,10 +68,10 @@ function App() {
           <Login setUserData={setUserData} setIsLoggedIn={setIsLoggedIn} setView={setView}/>
         }
         {view === 'admin-dashboard' &&
-          <AdminDashboard />
+          <AdminDashboard userData={userData} setUserData={setUserData} updateUserData={updateUserData} />
         }
         {view === 'user-dashboard' &&
-          <UserDashboard />
+          <UserDashboard userData={userData} setUserData={setUserData} updateUserData={updateUserData} />
         }
     </div>
   );

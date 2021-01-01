@@ -68,6 +68,7 @@ a {
 
 .navbar .links__container .link p {
   color: #f8f8f8;
+  font-size: 24px;
 }
 
 .navbar .profile {
@@ -94,10 +95,21 @@ a {
           justify-content: space-between;
 }
 
+.home .hero .container p {
+  width: 100%;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #f8f8f8;
+  font-size: 24px;
+}
+
 .home .hero .container .column-1 .item-1 {
   width: 400px;
   height: 400px;
-  background: grey;
+  background-image: url(./assets/chronograph.jpg);
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-position: center;
 }
 
 .home .hero .container .column-2 {
@@ -113,16 +125,26 @@ a {
           justify-content: space-between;
 }
 
+.home .hero .container .column-2 p {
+  text-align: right;
+}
+
 .home .hero .container .column-2 .item-2 {
   width: 400px;
   height: 180px;
-  background: grey;
+  background-image: url(./assets/automatic.jpg);
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-position: center;
 }
 
 .home .hero .container .column-2 .item-3 {
   width: 400px;
   height: 180px;
-  background: grey;
+  background-image: url(./assets/dress.jpg);
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-position: center;
 }
 
 .category__container {
@@ -145,39 +167,6 @@ a {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-}
-
-.category__container .container .item {
-  width: 250px;
-  height: 350px;
-  background: grey;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.25);
-  -webkit-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  border-radius: 10px;
-}
-
-.category__container .container .item p {
-  text-align: center;
-}
-
-.category__container .container .item .image {
-  width: 200px;
-  height: 200px;
-  margin: auto;
-  background: #282828;
-  border-radius: 10px;
-}
-
-.category__container .container .item .name {
-  margin-top: 10px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.category__container .container .item .price {
-  font-weight: bold;
 }
 
 .footer {
@@ -260,5 +249,64 @@ a {
   border-radius: 5px;
   background: #56BAEC;
   color: #f8f8f8;
+}
+
+.watch-card {
+  width: 250px;
+  height: 400px;
+  background: grey;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.25);
+  -webkit-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.watch-card button {
+  width: 100px;
+  margin: auto;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background: #56BAEC;
+  color: #f8f8f8;
+}
+
+.watch-card .image {
+  width: 200px;
+  height: 175px;
+}
+
+.watch-card .name {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.watch-card .price {
+  font-weight: bold;
+}
+
+.profile__icon {
+  color: green;
+  font-size: 32px;
+}
+
+.logout__icon {
+  color: red;
+  font-size: 32px;
 }
 /*# sourceMappingURL=App.css.map */

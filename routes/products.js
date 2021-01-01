@@ -1,10 +1,14 @@
 const router = require('express').Router();
 const Product = require('../models/Product');
 
-//read school classes
+//read all items
 router.get('/', (req, res) => {
   Product.find()
   .then(items => res.json(items));
+})
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  User.find({_id: id}).then(items => res.json(items));
 })
 
 router.post('/addWatch', async (req,res) => {
@@ -28,7 +32,19 @@ router.post('/addWatch', async (req,res) => {
 
 })
 
+//Delete item
+router.delete('/deleteWatch/:id', (req, res) => {
+  const id = req.params.id;
+  Product.deleteOne({ _id: id },
+  function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
 
 
 
-  module.exports = router;
+module.exports = router;

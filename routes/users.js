@@ -79,23 +79,38 @@ router.post('/login', async (req,res) => {
 
     //Create and assigning token
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
+    res.header('auth-token', token).send('success');
 })
 
 //add to watchlist
 router.put('/addToWatchlist', async (req,res) => {
-    User.update(
-      { "_id": req.body.userId },
-      { $push: { watchList:
-        { name: req.body.watchName, id: req.body.watchId } } },
-      function(err, result) {
-        if (err) {
-          res.send(err);
-        } else {
-          res.send(result);
-        }
+  User.update(
+    { "_id": req.body.userId },
+    { $push: { watchlist:
+      { name: req.body.watchName, id: req.body.watchId } } },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
       }
-    );
-  })
+    }
+  );
+})
+//remove from watchlist
+router.put('/removeFromWatchlist', async (req,res) => {
+  User.update(
+    { "_id": req.body.userId },
+    { $pull: { watchlist: {id: req.body.watchId}}}, 
+        {multi: true},
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
 
 module.exports = router;

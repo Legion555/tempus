@@ -9,8 +9,8 @@ const Login = (props) => {
     // eslint-disable-next-line
     const [view, setView] = useState('login');
     //Login
-    const [loginEmail, setLoginEmail] = useState('legion@gmail.com');
-    const [loginPassword, setLoginPassword] = useState('legion123');
+    const [loginEmail, setLoginEmail] = useState('phill@gmail.com');
+    const [loginPassword, setLoginPassword] = useState('phill123');
     //Register
     const [regName, setRegName] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -25,8 +25,7 @@ const Login = (props) => {
         }
         axios.post('/api/users/login', details)
         .then(res => {
-            if (res.data.length > 15) {
-                //Get User Data
+            if (res.data === 'success') {
                 axios.get('/api/users', {
                     params: {
                         email: loginEmail
@@ -64,6 +63,46 @@ const Login = (props) => {
                         console.log('something went wrong...');
                 }
             }
+            console.log(res.data)
+            // if (res.data.length > 15) {
+            //     //Get User Data
+            //     axios.get('/api/users', {
+            //         params: {
+            //             email: loginEmail
+            //         }
+            //     })
+            //     .then(res => {
+            //         //set user data
+            //         const newUserData = res.data;
+            //         props.setUserData(newUserData);
+            //         //set headers
+            //         const userToken = res.headers["auth-token"];
+            //         sessionStorage.setItem('userToken', userToken);
+            //         //redirect to home
+            //         props.setIsLoggedIn(true);
+            //         props.setView('home');
+            //     })
+            //     .catch(err => {
+            //         console.log("Error: " + err);
+            //     })
+            // } else {
+            //     let match = res.data.match(/"([^"]*)"/);
+            //     let error = [];
+            //     switch (match[1]) {
+            //         case 'email':
+            //             error = ['login-email', res.data];
+            //             setErrorHandle(error);
+            //             setLoginEmail('');
+            //             break;
+            //         case 'password':
+            //             error = ['login-password', res.data];
+            //             setErrorHandle(error);
+            //             setLoginPassword('');
+            //             break;
+            //         default:
+            //             console.log('something went wrong...');
+            //     }
+            // }
         })
     }
 

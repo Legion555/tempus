@@ -61,6 +61,7 @@ a {
       padding: 10px;
       p {
         color: $color-light;
+        font-size: 24px;
       }
     }
   }
@@ -79,21 +80,34 @@ a {
       max-width: 850px; height: 400px;
       margin: auto;
       display: flex; justify-content: space-between;
+      p {
+        width: 100%;
+        padding: 5px;
+        background: rgba( 0, 0, 0, 0.75 );
+        color: $color-light;
+        font-size: 24px;
+      }
       .column-1 {
         .item-1 {
           width: 400px; height: 400px;
-          background: grey;
+          background-image: url(./assets/chronograph.jpg);
+          object-fit: cover; background-position: center;
         }
       }
       .column-2 {
         display: flex; flex-direction: column; justify-content: space-between;
+        p {
+          text-align: right;
+        }
         .item-2 {
           width: 400px; height: 180px;
-          background: grey;
+          background-image: url(./assets/automatic.jpg);
+          object-fit: cover; background-position: center;
         }
         .item-3 {
           width: 400px; height: 180px;
-          background: grey;
+          background-image: url(./assets/dress.jpg);
+          object-fit: cover; background-position: center;
         }
       }
     }
@@ -112,30 +126,8 @@ a {
   }
   .container {
     display: flex; justify-content: space-evenly;
-    .item {
-      width: 250px; height: 350px;
-      background: grey;
-      padding: 20px;
-      background: rgba( 255, 255, 255, 0.25 );
-      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-      border-radius: 10px;
-      p {
-        text-align: center;
-      }
-      .image {
-        width: 200px; height: 200px;
-        margin: auto;
-        background: $color-dark;
-        border-radius: 10px;
-      }
-      .name {
-        margin-top: 10px;
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .price {
-        font-weight: bold;
-      }
+    .watch-card {
+      
     }
   }
 }
@@ -213,8 +205,46 @@ a {
         color: $color-light;
       }
     }
-    .register__container {
-      
-    }
   }
+}
+
+//SMALL COMPONENTS
+.watch-card {
+  width: 250px; height: 400px;
+  background: grey;
+  padding: 20px;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  border-radius: 10px;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+  button {
+    width: 100px;
+    margin: auto;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background: $color-button-primary;
+    color: $color-light;
+  }
+  .image {
+    width: 200px; height: 175px;
+  }
+  .name {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .price {
+    font-weight: bold;
+  }
+}
+
+//Icons
+.profile__icon {
+  color: green;
+  font-size: 32px;
+}
+.logout__icon {
+  color: red;
+  font-size: 32px;
 }

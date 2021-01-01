@@ -2,6 +2,8 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 
+import WatchCard from './WatchCard';
+
 const Home = (props) => {
     //UserData
     // eslint-disable-next-line
@@ -11,8 +13,6 @@ const Home = (props) => {
         readProducts();
     }, []);
 
-    
-
     const readProducts = () => {
         axios.get('./api/products')
         .then((res) => {
@@ -21,21 +21,7 @@ const Home = (props) => {
         .catch((error) => {
             console.error("Error: " + error)
         })
-    }
-
-    const addToWatchlist = (itemId, itemName) => {
-        const payload = {
-            userId: props.userData._id,
-            watchId: itemId,
-            watchName: itemName
-        }
-        axios.put("/api/users/addToWatchlist", payload)
-        .then(res => {
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
+    }   
 
   
     return (
@@ -45,15 +31,15 @@ const Home = (props) => {
                 <div className="container">
                     <div className="column-1">
                         <div className="item-1">
-
+                            <p>Chronograph watches</p>
                         </div>
                     </div>
                     <div className="column-2">
                         <div className="item-2">
-
+                            <p>Dress watches</p>
                         </div>
                         <div className="item-3">
-
+                            <p>Automatic watches</p>
                         </div>
                     </div>
                 </div>
@@ -65,12 +51,13 @@ const Home = (props) => {
                 </div>
                 <div className="container">
                     {(products.filter(item => item.category === 'chronograph')).map(item => 
-                        <div className="item">
-                            <div className="image"></div>
-                            <p className="name">{item.name}</p>
-                            <p>{item.details.length < 40 ? item.details : `${item.details.slice(0,40)}...`}</p>
-                            <p className="price">${item.price}</p>
-                        </div>
+                    <WatchCard 
+                    userData={props.userData} setUserData={props.setUserData}
+                        _id={item._id}
+                        name={item.name}
+                        details={item.details}
+                        price={item.price}
+                    />
                     )}
                 </div>
             </div>
@@ -81,12 +68,13 @@ const Home = (props) => {
                 </div>
                 <div className="container">
                     {(products.filter(item => item.category === 'automatic')).map(item => 
-                        <div className="item">
-                            <div className="image"></div>
-                            <p className="name">{item.name}</p>
-                            <p>{item.details.length < 40 ? item.details : `${item.details.slice(0,40)}...`}</p>
-                            <p className="price">${item.price}</p>
-                        </div>
+                    <WatchCard
+                        userData={props.userData} setUserData={props.setUserData}
+                        _id={item._id}
+                        name={item.name}
+                        details={item.details}
+                        price={item.price}
+                    />
                     )}
                 </div>
             </div>
@@ -97,13 +85,13 @@ const Home = (props) => {
                 </div>
                 <div className="container">
                     {(products.filter(item => item.category === 'dress')).map(item => 
-                        <div className="item">
-                            <div className="image"></div>
-                            <p className="name">{item.name}</p>
-                            <p>{item.details.length < 40 ? item.details : `${item.details.slice(0,40)}...`}</p>
-                            <p className="price">${item.price}</p>
-                            <button onClick={() => addToWatchlist(item._id, item.name)}>Add to watchlist</button>
-                        </div>
+                    <WatchCard
+                        userData={props.userData} setUserData={props.setUserData}
+                        _id={item._id}
+                        name={item.name}
+                        details={item.details}
+                        price={item.price}
+                    />
                     )}
                 </div>
             </div>
