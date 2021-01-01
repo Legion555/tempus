@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateView, updateUserData, updateIsLogged } from '../actions';
 
 const Login = (props) => {
+    const dispatch = useDispatch();
     //UserData
-    // eslint-disable-next-line
+    const view = useSelector(state => state.view);
+    const isLogged = useSelector(state => state.isLogged);
+
+    const [authView, setAuthView] = useState('login');
+    
     const [errorHandle, setErrorHandle] = useState([]);
-    //View
-    // eslint-disable-next-line
-    const [view, setView] = useState('login');
     //Login
-    const [loginEmail, setLoginEmail] = useState('phill@gmail.com');
-    const [loginPassword, setLoginPassword] = useState('phill123');
+    const [loginEmail, setLoginEmail] = useState('legion@gmail.com');
+    const [loginPassword, setLoginPassword] = useState('legion123');
     //Register
     const [regName, setRegName] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -34,13 +38,13 @@ const Login = (props) => {
                 .then(res => {
                     //set user data
                     const newUserData = res.data;
-                    props.setUserData(newUserData);
+                    dispatch(updateUserData(newUserData));
                     //set headers
                     const userToken = res.headers["auth-token"];
                     sessionStorage.setItem('userToken', userToken);
                     //redirect to home
-                    props.setIsLoggedIn(true);
-                    props.setView('home');
+                    dispatch(updateIsLogged(true));
+                    dispatch(updateView('home'));
                 })
                 .catch(err => {
                     console.log("Error: " + err);
@@ -117,7 +121,7 @@ const Login = (props) => {
         axios.post('/api/users/register', payload)
         .then(res => {
             if (res.data === 'success') {
-                setView('login');
+                dispatch(updateView('login'));
                 setErrorHandle('registered');
             } else {
                 let match = res.data.match(/"([^"]*)"/);
@@ -151,8 +155,8 @@ const Login = (props) => {
     return (
         <div  className="auth">
             <div className="auth__container">
-                <h1><span onClick={() => setView('login')} className={view === 'login' ? 'active' : undefined}>Login</span> | <span onClick={() => setView('register')} className={view === 'register' ? 'active' : undefined}>Register</span></h1>
-                {view === 'login' &&
+                <h1><span onClick={() => setAuthView('login')} className={authView === 'login' ? 'active' : undefined}>Login</span> | <span onClick={() => setAuthView('register')} className={authView === 'register' ? 'active' : undefined}>Register</span></h1>
+                {authView === 'login' &&
                 <div className="login__container">
                     <form>
                         <input type="text" required placeholder={errorHandle[0] === 'login-email' ? errorHandle[1] : 'Email'}
@@ -167,7 +171,7 @@ const Login = (props) => {
                     }
                 </div>
                 }
-                {view === 'register' &&
+                {authView === 'register' &&
                 <div className="register__container">
                     {errorHandle !== 'registered' &&
                     <form className="input-main">

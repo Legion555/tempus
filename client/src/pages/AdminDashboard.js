@@ -2,9 +2,12 @@
 import React from 'react';
 import axios from 'axios';
 import {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const AdminDashboard = (props) => {
+    const dispatch = useDispatch();
+    const userData = useSelector(state => state.userData);
     //watches
     const [watchesList, setWatchesList] = useState();
     //add-item
@@ -14,7 +17,7 @@ const AdminDashboard = (props) => {
     const [addCategory, setAddCategory] = useState('');
 
     React.useEffect(() => {
-        console.log(props.userData)
+        console.log(userData)
     }, []);
 
     const viewAllWatches = () => {

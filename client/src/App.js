@@ -1,23 +1,26 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateView, updateUserData, updateIsLogged } from './actions';
 //Components
-import Home from './components/Home';
-import Login from './components/Login';
-import UserDashboard from './components/UserDashboard';
-import AdminDashboard from './components/AdminDashboard';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import UserDashboard from './pages/UserDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import Product from './pages/Product';
 //Icons
 import { CgLogOut, CgProfile } from 'react-icons/cg';
 
 function App() {
-  //UserData
-  // eslint-disable-next-line
-  const [userData, setUserData] = React.useState();
+  //State
+  const userData = useSelector(state => state.userData)
+  const view = useSelector(state => state.view)
+  const isLogged = useSelector(state => state.isLogged);
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [view, setView] = React.useState('home');
+  const dispatch = useDispatch();
 
-  const updateUserData = () => {
+  const readUserData = () => {
     axios.get('/api/users', {
         params: {
             email: userData.email
@@ -26,7 +29,7 @@ function App() {
     .then(res => {
         //set user data
         const newUserData = res.data;
-        setUserData(newUserData);
+        dispatch(updateUserData(newUserData));
         //set headers
         const userToken = res.headers["auth-token"];
         sessionStorage.setItem('userToken', userToken);
@@ -44,34 +47,37 @@ function App() {
             </div>
             <div className="links__container">
                 <div className="link">
-                  <p onClick={() => setView('home')}>Home</p>
+                  <p onClick={() => dispatch(updateView('home'))}>Home</p>
                 </div>
             </div>
-            {isLoggedIn ?
+            {isLogged ?
               <div className="profile">
                 {userData.role === 'admin' ?
-                <CgProfile className="profile__icon" onClick={() => setView('admin-dashboard')} /> :
-                <CgProfile className="profile__icon" onClick={() => setView('user-dashboard')} />
+                <CgProfile className="profile__icon" onClick={() => dispatch(updateView('admin-dashboard'))} /> :
+                <CgProfile className="profile__icon" onClick={() => dispatch(updateView('user-dashboard'))} />
                 }
-                <CgLogOut className="logout__icon" onClick={() => setIsLoggedIn(false)} />
+                <CgLogOut className="logout__icon" onClick={() => dispatch(updateIsLogged(false))} />
               </div>
               :
               <div className="profile">
-                <p onClick={() => setView('login')}>Login</p>
+                <p onClick={() => dispatch(updateView('login'))}>Login</p>
               </div>
             }
         </div>
         {view === 'home' &&
-          <Home userData={userData} setUserData={setUserData} />
+          <Home />
         }
         {view === 'login' &&
-          <Login setUserData={setUserData} setIsLoggedIn={setIsLoggedIn} setView={setView}/>
+          <Login />
         }
         {view === 'admin-dashboard' &&
-          <AdminDashboard userData={userData} setUserData={setUserData} updateUserData={updateUserData} />
+          <AdminDashboard readUserData={readUserData} />
         }
         {view === 'user-dashboard' &&
-          <UserDashboard userData={userData} setUserData={setUserData} updateUserData={updateUserData} />
+          <UserDashboard readUserData={readUserData} />
+        }
+        {view === 'product' &&
+          <Product readUserData={readUserData} />
         }
     </div>
   );

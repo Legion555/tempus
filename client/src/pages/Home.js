@@ -1,12 +1,12 @@
 //Dependencies
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-import WatchCard from './WatchCard';
+import WatchCard from '../components/WatchCard';
 
 const Home = (props) => {
-    //UserData
-    // eslint-disable-next-line
+    const userData = useSelector(state => state.userData);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const Home = (props) => {
                 <div className="container">
                     {(products.filter(item => item.category === 'chronograph')).map(item => 
                     <WatchCard 
-                    userData={props.userData} setUserData={props.setUserData}
+                        setView={props.setView}
                         _id={item._id}
                         name={item.name}
                         details={item.details}
@@ -69,7 +69,6 @@ const Home = (props) => {
                 <div className="container">
                     {(products.filter(item => item.category === 'automatic')).map(item => 
                     <WatchCard
-                        userData={props.userData} setUserData={props.setUserData}
                         _id={item._id}
                         name={item.name}
                         details={item.details}
@@ -86,7 +85,7 @@ const Home = (props) => {
                 <div className="container">
                     {(products.filter(item => item.category === 'dress')).map(item => 
                     <WatchCard
-                        userData={props.userData} setUserData={props.setUserData}
+                        setView={props.setView}
                         _id={item._id}
                         name={item.name}
                         details={item.details}
